@@ -1,0 +1,20 @@
+h1 {
+    padding: 5%;
+    color: blue;
+}
+
+h2 {
+    padding-left: 5%;
+    color: red;
+    position: sticky;
+    align-self: baseline;
+}
+
+h3 {
+    padding-left: 10%;
+    background-color: rgba(0, 0, 255, 0.308);
+}
+
+p {
+    padding-left: 10%;
+}

@@ -1,0 +1,14 @@
+1,Almería,X,Betis
+2,Sevilla,X,Mallorca
+3,Valenc,X,Athclub
+4,Getafe,X,Rayo
+5,Celta,X,Atmadrid
+6,Valladol,X,Osasuna
+7,Villarr,X,Barcelon
+8,Rzaragoz,X,Alavés
+9,Levant,X,Andorr
+10,Laspalmas,X,Lugo
+11,Albacete,X,Málaga
+12,Roviedo,X,Burgos
+13,Eibar,X,Cartag
+14,Sporting,X,Huesca

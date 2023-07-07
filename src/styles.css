@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+    display: block;
+}
+
+/* for sidenav to take a whole page */
+html, body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    height: 100%;
+}
+
+html,
+header,
+body {
+    padding: 0px;
+    margin: 0px;
+}

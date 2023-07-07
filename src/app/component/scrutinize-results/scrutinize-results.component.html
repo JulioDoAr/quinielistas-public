@@ -1,0 +1,11 @@
+<mat-grid-list cols="5" rowHeight="25px">
+    <div *ngFor="let success of successes | async; let i = index">
+        <mat-grid-tile class="scrutinize-results-element-bottom">d{{ maxSuccesses - i }}</mat-grid-tile>
+    </div>
+</mat-grid-list>
+
+<mat-grid-list cols="5" rowHeight="25px">
+    <div *ngFor="let success of successes | async; let i = index">
+        <mat-grid-tile class="scrutinize-results-element-top"> {{ success }}</mat-grid-tile>
+    </div>
+</mat-grid-list>

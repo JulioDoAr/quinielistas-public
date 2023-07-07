@@ -1,0 +1,14 @@
+<mat-button-toggle-group multiple (change)="onChange($event)" [value]="value.split('')">
+    <mat-button-toggle style="width: 8%;">{{
+        data[0]
+        }}</mat-button-toggle>
+    <mat-button-toggle style="width: 34%;" value="1">{{
+        data[1]
+        }}</mat-button-toggle>
+    <mat-button-toggle style="width: 20%;" value="X">{{
+        data[2]
+        }}</mat-button-toggle>
+    <mat-button-toggle style="width: 34%;" value="2">{{
+        data[3]
+        }}</mat-button-toggle>
+</mat-button-toggle-group>
