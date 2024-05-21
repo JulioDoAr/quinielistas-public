@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
@@ -8,31 +8,24 @@ export class ScrutinizerService {
     }
 
     public scrutinize(selectedCol: string[], columns: string[]): number[] {
-        if (columns === undefined) {
+        if (columns.length < 1) {
             return [0, 0, 0, 0, 0];
         }
 
         const successes: number[] = new Array(columns[0].length + 1).fill(0);
 
-        if (selectedCol !== undefined && columns !== undefined) {
-            columns.forEach((col) => {
-                let hits = 0;
+        columns.forEach((col) => {
+            let hits = 0;
 
-                // ÑAPA: To show the column 15 only as informative
-                let scrutinizeLimit: number = col.length;
-                if (scrutinizeLimit > 8)
-                    scrutinizeLimit = 14;
-
-                for (let i = 0; i < scrutinizeLimit; i++) {
-                    if (col[i] === selectedCol[i] || selectedCol[i] === '0') {
-                        hits++;
-                    }
+            for (let i = 0; i < col.length; i++)
+                if (col[i] === selectedCol[i] || selectedCol[i] === '0') {
+                    hits++;
                 }
-                successes[hits]++;
-            });
-        }
 
-        return successes;
+            successes[hits]++;
+        });
+
+        return successes.reverse().slice(0, 5);
     }
 
     /**
@@ -41,7 +34,12 @@ export class ScrutinizerService {
      * @param columns All the columns to scrutinize
      * @param matchs The matrix of presentation. Number, Team, X, Team
      */
-    public calculatePercents(arrayLenght: number, columns: string[], matchs: string[][]): void {
+    public calculatePercents(arrayLenght: number, columns: string[], matchs: string[][]): string[][] {
+        if (!columns || !matchs)
+            return [];
+
+        var buttonNames: string[][] = this.cloneStringArray(matchs);
+
         // Initialization of the matrix with 0's
         const total: number[][] = new Array<Array<number>>(arrayLenght).fill([])
             .map(() => new Array<number>(3).fill(0));
@@ -73,11 +71,50 @@ export class ScrutinizerService {
         });
 
         // Append the percent to the text of the match
-        matchs.forEach((team, matchIndex) => {
-            team.forEach((game, teamIndex) => {
-                if (!Number.isNaN(total[matchIndex][teamIndex]))
-                    matchs[matchIndex][teamIndex + 1] += " (" + total[matchIndex][teamIndex] + "%)";
-            })
+        matchs.forEach((game, gameIndex) => {
+            for (let teamIndex = 0; teamIndex < game.length - 1; teamIndex++) {
+                let percent: number = total[gameIndex][teamIndex];
+                if (!Number.isNaN(percent))
+                    buttonNames[gameIndex][teamIndex + 1] = matchs[gameIndex][teamIndex + 1] + " (" + percent + "%)";
+            }
         })
+
+        return buttonNames;
+    }
+
+    public cloneStringArray(originalArray: string[][]): string[][] {
+        const newArray: string[][] = [];
+
+        for (let i = 0; i < originalArray.length; i++) {
+            const innerArray: string[] = [];
+            for (let j = 0; j < originalArray[i].length; j++) {
+                innerArray.push(originalArray[i][j]);
+            }
+            newArray.push(innerArray);
+        }
+
+        return newArray;
+    }
+
+    public calculateHits(result: string[], columns: string[]): number[] {
+        if (!columns)
+            return [];
+        if (columns.length == 0)
+            return [];
+
+        let hits = new Array(columns.length).fill(0);
+
+        if (!result)
+            return hits;
+
+        for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+            for (let i = 0; i < result.length; i++) {
+                if (columns[columnIndex][i] == result[i] || result[i] === '0') {
+                    hits[columnIndex]++;
+                }
+            }
+        }
+
+        return hits;
     }
 }

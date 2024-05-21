@@ -1,0 +1,30 @@
+<div class="row">
+    <app-scrutinize-results class="col-12" [maxHits]=14 [hits]="hits">
+    </app-scrutinize-results>
+
+    <div *ngIf="loading; else tableContent" class="col-12 text-center">
+        <img src="assets/loading.gif" alt="Loading...">
+    </div>
+
+    <ng-template #tableContent>
+        <table class="col-12 table">
+            <tr *ngFor="let match of matchs; let i = index; let odd = odd"
+                [ngClass]="{'table-row-odd': odd, 'table-row': true }">
+
+                <td>{{i+1}}</td>
+                <td class="table-text">{{match[1]}} - {{match[3]}}</td>
+                <td>
+                    <mat-button-toggle-group multiple (change)="onChange($event, i)" [value]="[selectedMatchs[i]]">
+                        <mat-button-toggle value='1'>1</mat-button-toggle>
+                        <mat-button-toggle value='X'>X</mat-button-toggle>
+                        <mat-button-toggle value='2' [checked]="selectedMatchs[i] == '2'">2</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </td>
+                <td *ngFor="let number of [].constructor(numberOfColumns); let j = index"
+                    [ngClass]="{'text-red': columns[j][i] == selectedMatchs[i]}">
+                    {{columns[j][i]}}
+                </td>
+            </tr>
+        </table>
+    </ng-template>
+</div>

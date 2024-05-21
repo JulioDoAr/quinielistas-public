@@ -31,26 +31,23 @@ export class RowComponent implements OnInit, AfterContentInit {
     }
 
     public onChange(event: MatButtonToggleChange) {
-        try {
-            const toggle: MatButtonToggle = event.source;
-            const group: MatButtonToggleGroup = toggle.buttonToggleGroup;
-
-            if (group.value.length > 1) {
-                group.value = [toggle.value];
-                this.value = toggle.value.toString();
-            } else if (this.value === toggle.value.toString()) {
-                group.value = [];
-                this.value = '0';
-            } else {
-                group.value = [toggle.value];
-                this.value = toggle.value.toString();
-            }
-        } catch (error) {
-            this.value = '0';
-        }
+        this.manageInput(event);
 
         this.emitSignal();
     }
+
+    private manageInput(event: MatButtonToggleChange) {
+        const toggle: MatButtonToggle = event.source;
+        const group: MatButtonToggleGroup = toggle.buttonToggleGroup;
+    
+        //this.fixButtonToggleGroup(event);
+        if (event.value.length > 1)
+          event.source.buttonToggleGroup.writeValue([event.value[1]]);
+    
+        //this.updateSelectedMatch(group.value, i);
+        this.value = group.value[0] ? group.value[0] : '0';
+        this.emitSignal();
+      }
 
     private emitSignal(): void {
         this.change.emit(new RowSignal(this.index, this.value));

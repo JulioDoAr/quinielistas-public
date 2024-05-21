@@ -1,19 +1,32 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {environment} from 'src/environments/environment';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ResourcesService {
+
+    public matchs: BehaviorSubject<string[][]>
+    public matchs8: BehaviorSubject<string[][]>
+    public columns: BehaviorSubject<string[]>
+    public columns8: BehaviorSubject<string[]>
+
     constructor(private httpClient: HttpClient) {
+        this.matchs = new BehaviorSubject([])
+        this.matchs8 = new BehaviorSubject([])
+        this.columns = new BehaviorSubject([])
+        this.columns8 = new BehaviorSubject([])
     }
 
-    public getMatchs(): Observable<string[][]> {
-        return this.httpClient
-            .get(environment.path.matchs.url, {responseType: 'text'})
+    public getMatchs(): void {
+        if (this.matchs.value.length > 0)
+            return
+
+        this.httpClient
+            .get(environment.path.matchs.url, { responseType: 'text' })
             .pipe(
                 map((matchsString) => {
                     const validData: string[][] = [];
@@ -31,12 +44,15 @@ export class ResourcesService {
                     });
                     return validData;
                 })
-            );
+            ).subscribe(data => this.matchs.next(data));
     }
 
-    public getMatchs8(): Observable<string[][]> {
-        return this.httpClient
-            .get(environment.path.matchs.url8, {responseType: 'text'})
+    public getMatchs8(): void {
+        if (this.matchs8.value.length > 0)
+            return
+
+        this.httpClient
+            .get(environment.path.matchs.url8, { responseType: 'text' })
             .pipe(
                 map((matchsString) => {
                     const validData: string[][] = [];
@@ -54,12 +70,15 @@ export class ResourcesService {
                     });
                     return validData;
                 })
-            );
+            ).subscribe(data => this.matchs8.next(data));;
     }
 
-    public getColumns(): Observable<string[]> {
-        return this.httpClient
-            .get(environment.path.columns.url, {responseType: 'text'})
+    public getColumns(): void {
+        if (this.columns.value.length > 0)
+            return
+
+        this.httpClient
+            .get(environment.path.columns.url, { responseType: 'text' })
             .pipe(
                 map((rawColumns) => {
                     const validData: string[] = [];
@@ -75,12 +94,15 @@ export class ResourcesService {
 
                     return validData;
                 })
-            );
+            ).subscribe(data => this.columns.next(data));;
     }
 
-    public getColumns8(): Observable<string[]> {
-        return this.httpClient
-            .get(environment.path.columns.url8, {responseType: 'text'})
+    public getColumns8(): void {
+        if (this.columns8.value.length > 0)
+            return
+
+        this.httpClient
+            .get(environment.path.columns.url8, { responseType: 'text' })
             .pipe(
                 map((rawColumns) => {
                     const validData: string[] = [];
@@ -96,6 +118,6 @@ export class ResourcesService {
 
                     return validData;
                 })
-            );
+            ).subscribe(data => this.columns8.next(data));;
     }
 }

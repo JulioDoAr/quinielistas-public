@@ -1,8 +1,0 @@
-1,Almería,X,Betis
-2,Sevilla,X,Mallorca
-3,Valenc,X,Athclub
-4,Getafe,X,Rayo
-5,Celta,X,Atmadrid
-6,Valladol,X,Osasuna
-7,Villarr,X,Barcelon
-8,Rzaragoz,X,Alavés

@@ -1,7 +1,40 @@
 <div class="row">
-    <app-scrutinize-results class="col-12" [selectedMatchs]="selectedMatchs" [columns]="columns">
+    <app-scrutinize-results class="col-12" [maxHits]=14 [hits]="hits">
     </app-scrutinize-results>
 
-    <app-keypad class="col-12" [selectedMatchs]="selectedMatchs" [matchs]="matchs">
-    </app-keypad>
+    <div *ngIf="loading; else tableContent" class="col-12 text-center">
+        <img src="assets/loading.gif" alt="Loading...">
+    </div>
+
+    <ng-template #tableContent>
+        <table class="table">
+            <tr *ngFor="let match of buttonNames; let i = index; let odd = odd">
+                <mat-button-toggle-group multiple (change)="onChange($event, i)" [value]="[selectedMatchs[i]]"
+                    class="table-row">
+                    <td>
+                        <mat-button-toggle class="table-index">
+                            {{match[0]}}
+                        </mat-button-toggle>
+                    </td>
+                    <td class="table-text-match">
+                        <mat-button-toggle value='1'>
+                            {{match[1]}}
+                        </mat-button-toggle>
+                    </td>
+                    <td class="table-text-x">
+                        <mat-button-toggle value='X'>
+                            {{match[2]}}
+                        </mat-button-toggle>
+                    </td>
+                    <td class="table-text-match">
+                        <mat-button-toggle value='2'>
+                            {{match[3]}}
+                        </mat-button-toggle>
+                    </td>
+                </mat-button-toggle-group>
+            </tr>
+        </table>
+    </ng-template>
 </div>
+
+<!-- [checked]="selectedMatchs[i] == '1'" -->

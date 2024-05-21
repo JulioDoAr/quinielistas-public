@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, Input, OnInit} from '@angular/core';
+import {AfterContentInit, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {RowSignal} from './row/row.component';
 
@@ -6,9 +6,9 @@ import {RowSignal} from './row/row.component';
     selector: 'app-keypad',
     templateUrl: './keypad.component.html'
 })
-export class KeypadComponent implements OnInit, AfterContentInit {
+export class KeypadComponent implements OnInit {
 
-    @Input() matchs: string[][];
+    @Input() matchs: BehaviorSubject<string[][]>;
     @Input() selectedMatchs: BehaviorSubject<string[]>;
     public signal: string[];
 
@@ -16,13 +16,10 @@ export class KeypadComponent implements OnInit, AfterContentInit {
     }
 
     ngOnInit(): void {
-        this.selectedMatchs.subscribe(data => this.signal = data);
+        this.signal = this.selectedMatchs.value;
+        this.emitSignal();
     }
-
-    ngAfterContentInit() {
-        // this.emitSignal();
-    }
-
+    
     public onChange(event: RowSignal): void {
         this.signal[event.index] = event.value;
         this.emitSignal();

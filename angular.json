@@ -54,6 +54,15 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "aot": false
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -61,7 +70,7 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
@@ -87,6 +96,9 @@
           "configurations": {
             "production": {
               "browserTarget": "quinielistas:build:production"
+            },
+            "development": {
+              "browserTarget": "quinielistas:build:development"
             }
           }
         },

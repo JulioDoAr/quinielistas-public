@@ -1,4 +1,4 @@
-<div class="row app-keypad " *ngFor="let match of matchs; let i = index">
+<div class="row app-keypad " *ngFor="let match of matchs | async; let i = index">
     <app-row class="col-12" [index]="i" [data]="match" [value]="signal[i]" (change)="onChange($event)">
     </app-row>
 </div>
